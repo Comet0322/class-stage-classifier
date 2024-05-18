@@ -3,5 +3,6 @@ data
 *.pt
 __pycache__
 wandb
+archived
 *.txt
 *.json
