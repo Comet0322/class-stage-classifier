@@ -11,7 +11,7 @@ args = parser.parse_args()
 
 
 if __name__ == "__main__":
-    label_dir = Path(args.data_dir) / "label_fixed"
+    label_dir = Path(args.data_dir) / "label"
     label_list = sorted(label_dir.glob("*.txt"))
     audio_dir = Path(args.data_dir) / "audio"
     audio_list = sorted(audio_dir.glob("*.wav"))
@@ -29,7 +29,10 @@ if __name__ == "__main__":
                 audio_duration - label_duration,
             )
             label_df.iloc[-1, 1] = audio_duration
-
+        
+        # 6 digits
+        label_df.iloc[:, 0] = label_df.iloc[:, 0].apply(lambda x: f"{x:.6f}")
+        label_df.iloc[:, 1] = label_df.iloc[:, 1].apply(lambda x: f"{x:.6f}")
         label_df.to_csv(
             fixed_label_dir / label_path.stem, header=None, index=None, sep="\t"
         )
