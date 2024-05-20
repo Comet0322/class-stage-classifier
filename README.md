@@ -6,6 +6,13 @@
 data/audio/*.wav
 data/label/*.txt
 
+## 修正標註長度
+避免標註總長超出音檔實際長度，執行以下命令統一標註總長為音檔的實際長度
+DATA_DIR 為資料的位置，預設為 "data"
+```
+python fix_label.py --data_dir DATA_DIR
+```
+
 # Training
 設定 run.sh 裡面的的參數
 1. data_dir
