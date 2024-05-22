@@ -55,6 +55,11 @@ def train(model, data_loader):
                                            max_norm=config['max_norm'])
             scaler.step(optimizer)
             scaler.update()
+            scheduler.step()
+            # wandb log
+            wandb.log({
+                'lr': optimizer.param_groups[0]['lr'],
+            })
 
     y_pred = torch.cat(y_pred).flatten().cpu()
     y_true = torch.cat(y_true).flatten().cpu()
@@ -186,6 +191,8 @@ if __name__ == "__main__":
             lr=config['lr'],
             weight_decay=1e-5
         )
+        scheduler = torch.optim.lr_scheduler.OneCycleLR(optimizer, max_lr=config['lr'], steps_per_epoch=len(train_loader)//config["grad_accum_steps"], epochs=config['num_epochs'])
+
         # 用在加速 Automatic Mixed Precision https://pytorch.org/tutorials/recipes/recipes/amp_recipe.html
         scaler = torch.cuda.amp.GradScaler(enabled=config['use_amp'])
         # 定義損失函數
