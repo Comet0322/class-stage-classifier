@@ -39,3 +39,12 @@ bash run.sh
 # 在 jupyter-notebook 中｀執行以下命令
 !bash run.sh
 ```
+
+# Evaluate
+評估 Chat-GPT 預測結果的分數
+將模型對測試資料的預測結果放在 label 底下的 pred 資料集 (要自己建立)
+
+```
+# 在 terminal 執行以下命令
+python3 metric.py
+```
